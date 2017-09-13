@@ -1,0 +1,34 @@
+version: "2"
+
+services:
+  postfixadmin:
+    container_name: "postfixadmin"
+    image: postfixadmin
+    ports:
+      - 5080:80
+      - 5443:443
+    environment:
+      POSTFIXADMIN_DB_TYPE: "pgsql"
+      POSTFIXADMIN_DB_HOST: "postgresql"
+      POSTFIXADMIN_DB_USER: "postgres"
+      POSTFIXADMIN_DB_PASSWORD: "secret"
+      POSTFIXADMIN_DB_NAME: "postgres"
+      POSTFIXADMIN_SETUP_PASSWORD: "sdfsdffff"
+    networks:
+      postfixadmin:
+        aliases:
+         - postfixadmin
+
+  postgresql:
+    container_name: "postgresql"
+    image: postgres:9.6.5
+    environment:
+      POSTGRES_PASSWORD: "secret"
+    networks:
+      postfixadmin:
+        aliases:
+          - postgresql
+
+networks:
+  postfixadmin:
+    external: true
